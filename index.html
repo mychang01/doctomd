@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DocToMD — Convert Documents to Markdown</title>
+  <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <div class="header-left">
+        <img src="images/favicon.svg" alt="DocToMD" class="logo-icon">
+        <h1 class="logo">DocToMD</h1>
+      </div>
+      <div class="header-right">
+        <span class="engine-status" id="engineStatus">
+          <span class="status-dot"></span>
+          <span class="status-text">Loading engine…</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="container main">
+
+    <!-- Drop Zone -->
+    <section class="drop-zone" id="dropZone">
+      <div class="drop-zone-content">
+        <svg class="drop-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4v28m0 0l-10-10m10 10l10-10" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M8 34v6a4 4 0 004 4h24a4 4 0 004-4v-6" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <p class="drop-text">Drop files or folders here</p>
+        <p class="drop-subtext">or click to browse</p>
+        <p class="drop-formats">PDF, DOCX, XLSX, PPTX, HTML, CSV, EPUB, and more</p>
+      </div>
+      <input type="file" id="fileInput" multiple hidden>
+    </section>
+
+    <!-- File Queue -->
+    <section class="file-queue card" id="fileQueue" hidden>
+      <div class="card-header">
+        <h2>Files</h2>
+        <div class="card-actions">
+          <button class="btn btn-sm" id="btnDownloadAll" hidden>Download All (ZIP)</button>
+          <button class="btn btn-sm btn-outline" id="btnClearQueue">Clear</button>
+        </div>
+      </div>
+      <ul class="file-list" id="fileList"></ul>
+    </section>
+
+    <!-- Result Panel -->
+    <section class="result-panel card" id="resultPanel" hidden>
+      <div class="card-header">
+        <h2 id="resultFileName">Result</h2>
+        <div class="card-actions">
+          <div class="tab-group">
+            <button class="tab active" data-tab="raw">Raw</button>
+            <button class="tab" data-tab="preview">Preview</button>
+          </div>
+          <button class="btn btn-sm btn-icon" id="btnCopy" title="Copy to clipboard">
+            <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16"><path d="M8 2a1 1 0 000 2h2a1 1 0 100-2H8z"/><path d="M3 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v6h-4.586l1.293-1.293a1 1 0 00-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L10.414 13H15v3a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"/></svg>
+          </button>
+          <button class="btn btn-sm" id="btnDownloadSingle">Download .md</button>
+        </div>
+      </div>
+      <div class="result-body">
+        <div class="tab-content active" id="tabRaw">
+          <pre class="result-raw"><code id="resultRaw"></code></pre>
+        </div>
+        <div class="tab-content" id="tabPreview">
+          <div class="result-preview" id="resultPreview"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- History -->
+    <section class="history-section card" id="historySection" hidden>
+      <div class="card-header">
+        <h2>History</h2>
+        <button class="btn btn-sm btn-outline" id="btnClearHistory">Clear All</button>
+      </div>
+      <ul class="history-list" id="historyList"></ul>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p>Powered by <a href="https://github.com/microsoft/markitdown" target="_blank" rel="noopener">Microsoft MarkItDown</a> + <a href="https://pyodide.org" target="_blank" rel="noopener">Pyodide</a>. Runs entirely in your browser.</p>
+    </div>
+  </footer>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" hidden></div>
+
+  <!-- Scripts -->
+  <script src="coi-serviceworker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.1/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <script src="js/history.js"></script>
+  <script src="js/preview.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
